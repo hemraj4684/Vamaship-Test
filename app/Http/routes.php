@@ -1,0 +1,35 @@
+<?php
+
+/*
+|--------------------------------------------------------------------------
+| Application Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register all of the routes for an application.
+| It's a breeze. Simply tell Laravel the URIs it should respond to
+| and give it the controller to call when that URI is requested.
+|
+*/
+
+Route::get('/', 'WelcomeController@index');
+
+Route::controllers([
+    'auth' => 'Auth\AuthController',
+	'password' => 'Auth\PasswordController',
+]);
+
+/*Route::get('auth/login', 'Auth\AuthController@getLogin');
+Route::post('auth/login', 'Auth\AuthController@postLogin');
+Route::get('auth/logout', 'Auth\AuthController@getLogout');*/
+
+// Registration routes...
+Route::get('auth/register', 'Auth\AuthController@getRegister');
+Route::post('auth/register', ['as' => 'auth/post/register', 'uses' => 'RegisterController@saveUser']);
+
+//post routes
+Route::get('home', ['as' => 'postListing', 'uses' => 'HomeController@index']);
+Route::get('post/create', ['as' => 'postCreate', 'uses' => 'HomeController@create']);
+Route::post('post/create', ['as' => 'postStore', 'uses' => 'HomeController@store']);
+Route::get('post/edit/{id}', ['as' => 'postEdit', 'uses' => 'HomeController@edit']);
+Route::post('post/update', ['as' => 'postUpdate', 'uses' => 'HomeController@update']);
+Route::get('post/delete/{id}', ['as' => 'postDelete', 'uses' => 'HomeController@delete']);
